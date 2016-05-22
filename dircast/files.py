@@ -71,7 +71,6 @@ def find_files(channel_url, path):
     for child in sorted(path.iterdir()):
         getLogger(__name__).info("checking %s", child)
         mimetype = guess_mimetype(child)
-        print(mimetype)
         is_audio = mimetype in AUDIO_MIMETYPES
         getLogger(__name__).info(
             "%s is of type %s - %s",
