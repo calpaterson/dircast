@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 from os import path
 
@@ -22,4 +23,5 @@ def test_find_mp3_files():
         mimetype="audio/mpeg",
     )
     expected.length = 17870
+    expected.duration = timedelta(seconds=1)
     assert files[0] == expected

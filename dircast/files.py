@@ -1,6 +1,8 @@
+import math
 from logging import getLogger
 import mimetypes
 import hashlib
+from datetime import timedelta
 
 import yaml
 import mutagen
@@ -16,6 +18,7 @@ class FileMetadata(object):
         self.link = link
         self.mimetype = mimetype
         self.length = 0
+        self.duration = None
 
     def __eq__(self, other):
         return (isinstance(other, self.__class__)
@@ -47,6 +50,7 @@ def get_file_metadata(channel_url, path):
         mimetype="audio/mpeg"
     )
     md.length = path.stat().st_size
+    md.duration = timedelta(seconds=round(tag_info.info.length))
     return md
 
 
