@@ -1,14 +1,14 @@
 import math
 from logging import getLogger
-import mimetypes
 import hashlib
 from datetime import timedelta
 
+import magic
 import yaml
 import mutagen
 
 
-AUDIO_MIMETYPES = ["audio/mpeg"]
+AUDIO_MIMETYPES = {"audio/mpeg", "audio/mp4", "video/mp4"}
 
 
 class FileMetadata(object):
@@ -28,6 +28,14 @@ class FileMetadata(object):
         return not self.__eq__(other)
 
 
+def guess_mimetype(path):
+    magic_mimetype = magic.from_file(str(path), mime=True)
+    if magic_mimetype == b"audio/x-m4a":
+        return "audio/mp4"
+    else:
+        return magic_mimetype.decode("utf-8")
+
+
 def load_channel_file(path):
     path = str(path / "channel.yml")
     getLogger(__name__).info("loading %s", path)
@@ -38,7 +46,7 @@ def load_channel_file(path):
         }
 
 
-def get_file_metadata(channel_url, path):
+def get_file_metadata(channel_url, mimetype, path):
     tag_info = mutagen.File(str(path), easy=True)
     md = FileMetadata(
         id=hashlib.sha1(tag_info["title"][0].encode("utf-8")).hexdigest(),
@@ -47,7 +55,7 @@ def get_file_metadata(channel_url, path):
             channel_url,
             str(path.relative_to(path, path.parents[0])),
         ]),
-        mimetype="audio/mpeg"
+        mimetype=mimetype
     )
     md.length = path.stat().st_size
     md.duration = timedelta(seconds=round(tag_info.info.length))
@@ -58,7 +66,8 @@ def find_files(channel_url, path):
     files = []
     for child in sorted(path.iterdir()):
         getLogger(__name__).info("checking %s", child)
-        mimetype = mimetypes.guess_type(str(child))[0]
+        mimetype = guess_mimetype(child)
+        print(mimetype)
         is_audio = mimetype in AUDIO_MIMETYPES
         getLogger(__name__).info(
             "%s is of type %s - %s",
@@ -68,5 +77,5 @@ def find_files(channel_url, path):
         )
 
         if is_audio:
-            files.append(get_file_metadata(channel_url, child))
+            files.append(get_file_metadata(channel_url, mimetype, child))
     return files

@@ -2,3 +2,4 @@ mutagen
 click
 pyyaml
 feedgen
+python-magic

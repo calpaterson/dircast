@@ -25,3 +25,15 @@ def test_find_mp3_files():
     expected.length = 17870
     expected.duration = timedelta(seconds=1)
     assert files[0] == expected
+
+def test_find_m4a_files():
+    files = find_files("http://example.com/", Path(HERE) / "test_data" / "1")
+    expected = FileMetadata(
+        id="7a37534b4994869e96552561449b2f5b9ddd985e",
+        title="Some silence",
+        link="http://example.com/1-some-silence.m4a",
+        mimetype="audio/mp4",
+    )
+    expected.length = 1193
+    expected.duration = timedelta(seconds=1)
+    assert files[0] == expected
