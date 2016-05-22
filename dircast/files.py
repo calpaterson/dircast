@@ -48,9 +48,13 @@ def load_channel_file(path):
 
 def get_file_metadata(channel_url, mimetype, path):
     tag_info = mutagen.File(str(path), easy=True)
+    try:
+        title = tag_info["title"][0]
+    except KeyError:
+        title = path.name
     md = FileMetadata(
-        id=hashlib.sha1(tag_info["title"][0].encode("utf-8")).hexdigest(),
-        title=tag_info["title"][0],
+        id=hashlib.sha1(title.encode()).hexdigest(),
+        title=title,
         link="".join([
             channel_url,
             str(path.relative_to(path, path.parents[0])),
