@@ -1,5 +1,5 @@
 Dircast - create a podcast RSS feed for a directory of audio files
-------------------------------------------------------------------
+==================================================================
 
 Dircast is a tool to create a podcast RSS feed for a directory of audio files.
 
@@ -8,7 +8,7 @@ Dircast is inspired by other projects that do the same thing (especially
 formats other than mp3.
 
 Usage
-=====
+-----
 
 First create a `channel.yml` file in the same directory as your audio files:
 
@@ -31,13 +31,13 @@ Dircast will automatically look for audio files and add them to the RSS feed.
 It will use any tags present in the audio files to set file metadata.
 
 Supported file formats
-======================
+----------------------
 
 - mp3 (*.mp3)
 - mp4 (*.aac, *.mp4, *.m4a)
 
 Titles and RSS "unique ids"
-===========================
+---------------------------
 
 Dircast will look for a title tag to determine the title of your files.  If it
 doesn't find one it will use the filename as the title.
@@ -48,7 +48,7 @@ tag, if you rename the file) the unique id will change and podcast software
 might get confused.
 
 Range queries
-=============
+-------------
 
 Make sure that the HTTP server you are serving from supports
 [range requests](https://en.wikipedia.org/wiki/Byte_serving) - otherwise most
@@ -57,6 +57,6 @@ webservers like nginx or apache will do this but simple ones (like the one in
 the Python standard library) won't.
 
 Licence
-=======
+-------
 
 Dircast is licensed under GPLv3.  See the file [LICENCE](LICENCE) for details.
