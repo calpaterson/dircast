@@ -4,7 +4,7 @@ from sys import stderr, stdout
 
 import click
 
-from dircast.files import load_channel_file
+from dircast.files import load_channel_file, find_files
 from dircast.feed import generate_feed
 
 @click.command()
@@ -16,4 +16,8 @@ def main(directory, debug):
     basicConfig(level=INFO if debug else ERROR, steam=stderr)
     getLogger(__name__).info("started")
     channel_dict = load_channel_file(Path(directory))
-    stdout.buffer.write(generate_feed(channel_dict, []))
+    stdout.buffer.write(
+        generate_feed(
+            channel_dict,
+            find_files(channel_dict["url"], Path(directory)))
+    )

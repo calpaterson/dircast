@@ -10,12 +10,12 @@ AUDIO_MIMETYPES = ["audio/mpeg"]
 
 
 class FileMetadata(object):
-    def __init__(self, id, title, link, author_name, author_email):
+    def __init__(self, id, title, link, mimetype):
         self.id = id
         self.title = title
         self.link = link
-        self.author_name = author_name
-        self.author_email = author_email
+        self.mimetype = mimetype
+        self.length = 0
 
     def __eq__(self, other):
         return (isinstance(other, self.__class__)
@@ -35,18 +35,22 @@ def load_channel_file(path):
         }
 
 
-def get_file_metadata(path):
+def get_file_metadata(channel_url, path):
     tag_info = mutagen.File(str(path), easy=True)
-    return FileMetadata(
+    md = FileMetadata(
         id=hashlib.sha1(tag_info["title"][0].encode("utf-8")).hexdigest(),
         title=tag_info["title"][0],
-        link=str(path.relative_to(path, path.parents[0])),
-        author_name="Unknown author",
-        author_email="unknown@example.com"
+        link="".join([
+            channel_url,
+            str(path.relative_to(path, path.parents[0])),
+        ]),
+        mimetype="audio/mpeg"
     )
+    md.length = path.stat().st_size
+    return md
 
 
-def find_files(path):
+def find_files(channel_url, path):
     files = []
     for child in sorted(path.iterdir()):
         getLogger(__name__).info("checking %s", child)
@@ -60,5 +64,5 @@ def find_files(path):
         )
 
         if is_audio:
-            files.append(get_file_metadata(child))
+            files.append(get_file_metadata(channel_url, child))
     return files
