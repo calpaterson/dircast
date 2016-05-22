@@ -1,9 +1,7 @@
 from pathlib import Path
 from os import path
 
-import pytest
-
-from dircast.files import load_channel_file
+from dircast.files import load_channel_file, find_files, FileMetadata
 
 HERE = Path(path.abspath(path.dirname(__file__)))
 
@@ -15,6 +13,13 @@ def test_find_channel_file():
         }
     assert expected == load_channel_file(Path(HERE) / "test_data" / "0")
 
-@pytest.mark.xfail(reason="test not implemented")
-def test_find_files_with_mp3():
-    assert False
+def test_find_mp3_files():
+    files = find_files(Path(HERE) / "test_data" / "0")
+    expected = FileMetadata(
+        id="7a37534b4994869e96552561449b2f5b9ddd985e",
+        title="Some silence",
+        link="1-some-silence.mp3",
+        author_name="Unknown author",
+        author_email="unknown@example.com"
+    )
+    assert files[0] == expected
