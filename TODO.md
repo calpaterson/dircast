@@ -1,6 +1,7 @@
 TODO
 ====
 
+- Escape enclosure URLs
 - Handle URLs without trailing slash
 - More help text
 - Release to PyPI
