@@ -7,6 +7,18 @@ Dircast is inspired by other projects that do the same thing (especially
 [dropcaster](https://github.com/nerab/dropcaster)) but dircast supports file
 formats other than mp3.
 
+Install
+-------
+
+Development version:
+```
+pip install https://github.com/calpaterson/dircast/archive/master.zip
+```
+
+### Windows ###
+Windows dircast only works with 32bit python, due to [python-magic dependent DLL files](https://github.com/ahupp/python-magic#dependencies) (there might be a 64bit version available from somewhere else). After pip install add these to PATH on you should be good to go.
+
+
 Usage
 -----
 
