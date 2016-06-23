@@ -22,7 +22,18 @@ def generate_feed(channel_dict, file_metadatas):
     fg.title(channel_dict["title"])
     fg.description(channel_dict["description"])
 
+    try:
+        category = channel_dict["category"]
+    except KeyError:
+        category = None
+    try:
+        subcategory = channel_dict["subcategory"]
+    except KeyError:
+        subcategory = None
+    fg.podcast.itunes_category(category, subcategory)
+
     for file_metadata in file_metadatas:
         add_entry(fg, file_metadata)
 
     return fg.rss_str(pretty=True)
+
