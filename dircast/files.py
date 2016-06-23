@@ -66,6 +66,7 @@ def get_file_metadata(channel_url, mimetype, path):
 
 
 def find_files(channel_url, path):
+    path = path.resolve()
     files = []
     for child in sorted(path.iterdir()):
         getLogger(__name__).info("checking %s", child)
