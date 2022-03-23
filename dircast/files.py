@@ -30,10 +30,10 @@ class FileMetadata(object):
 
 def guess_mimetype(path):
     magic_mimetype = magic.from_file(str(path), mime=True)
-    if magic_mimetype == b"audio/x-m4a":
+    if magic_mimetype == "audio/x-m4a":
         return "audio/mp4"
     else:
-        return magic_mimetype.decode("utf-8")
+        return magic_mimetype
 
 
 def load_channel_file(path):
