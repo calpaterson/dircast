@@ -13,6 +13,7 @@ def add_entry(fg, md):
     fe.id(md.id)
     fe.title(md.title)
     fe.enclosure(md.link, str(md.length), "audio/mpeg")
+    fe.published(md.published)
     if md.duration is not None:
         fe.podcast.itunes_duration(format_itunes_duration(md.duration))
 

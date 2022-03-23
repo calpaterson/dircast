@@ -1,7 +1,8 @@
 import math
 from logging import getLogger
 import hashlib
-from datetime import timedelta
+from datetime import timedelta, datetime, timezone
+import os.path
 
 import magic
 import yaml
@@ -12,13 +13,14 @@ AUDIO_MIMETYPES = {"audio/mpeg", "audio/mp4", "video/mp4"}
 
 
 class FileMetadata(object):
-    def __init__(self, id, title, link, mimetype):
+    def __init__(self, id, title, link, mimetype, published):
         self.id = id
         self.title = title
         self.link = link
         self.mimetype = mimetype
         self.length = 0
         self.duration = None
+        self.published = published
 
     def __eq__(self, other):
         return (isinstance(other, self.__class__)
@@ -56,11 +58,13 @@ def get_file_metadata(channel_url, mimetype, path):
         channel_url,
         str(path)
     ])
+    mtime = path.stat().st_mtime
     md = FileMetadata(
         id=hashlib.sha1(title.encode()).hexdigest(),
         title=title,
         link=link,
-        mimetype=mimetype
+        mimetype=mimetype,
+        published=datetime.fromtimestamp(mtime, timezone.utc),
     )
     md.length = path.stat().st_size
     md.duration = timedelta(seconds=round(tag_info.info.length))
