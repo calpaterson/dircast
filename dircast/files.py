@@ -52,13 +52,14 @@ def get_file_metadata(channel_url, mimetype, path):
         title = tag_info["title"][0]
     except KeyError:
         title = path.name
+    link = "".join([
+        channel_url,
+        str(path)
+    ])
     md = FileMetadata(
         id=hashlib.sha1(title.encode()).hexdigest(),
         title=title,
-        link="".join([
-            channel_url,
-            str(path.relative_to(path, path.parents[0])),
-        ]),
+        link=link,
         mimetype=mimetype
     )
     md.length = path.stat().st_size
