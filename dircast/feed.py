@@ -1,3 +1,4 @@
+from urllib.parse import urljoin
 from feedgen.feed import FeedGenerator
 
 def format_itunes_duration(td):
@@ -15,10 +16,11 @@ def add_entry(fg, md):
     if md.duration is not None:
         fe.podcast.itunes_duration(format_itunes_duration(md.duration))
 
-def generate_feed(channel_dict, file_metadatas):
+def generate_feed(channel_dict, output_file, file_metadatas):
     fg = FeedGenerator()
     fg.load_extension("podcast")
-    fg.link(href=channel_dict["url"], rel="self")
+    feed_url = urljoin(channel_dict["url"], output_file)
+    fg.link(href=feed_url, rel="self")
     fg.title(channel_dict["title"])
     fg.description(channel_dict["description"])
 
