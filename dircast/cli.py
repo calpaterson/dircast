@@ -21,9 +21,9 @@ def main(directory, debug, output_file):
     if not channel_dict["base_url"].endswith("/"):
         getLogger(__name__).error("base_url should end with a /")
         exit(1)
-    stdout.buffer.write(
-        generate_feed(
-            channel_dict,
-            output_file,
-            find_files(channel_dict["base_url"], Path(directory)))
-    )
+    feed = generate_feed(
+        channel_dict,
+        output_file,
+        find_files(channel_dict["base_url"], Path(directory)))
+    with open(output_file, "wb") as output_f:
+        output_f.write(feed)
