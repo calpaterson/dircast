@@ -22,7 +22,7 @@ def generate_feed(channel_dict, file_metadatas):
     fg.title(channel_dict["title"])
     fg.description(channel_dict["description"])
 
-    for file_metadata in file_metadatas:
+    for file_metadata in reversed(file_metadatas):
         add_entry(fg, file_metadata)
 
     return fg.rss_str(pretty=True)
