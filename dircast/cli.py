@@ -1,6 +1,6 @@
 from logging import basicConfig, INFO, ERROR, getLogger
 from pathlib import Path
-from sys import stderr, stdout
+from sys import stderr, stdout, exit
 
 import click
 
@@ -18,6 +18,9 @@ def main(directory, debug, output_file):
     basicConfig(level=INFO if debug else ERROR, stream=stderr)
     getLogger(__name__).info("started")
     channel_dict = load_channel_file(Path(directory))
+    if not channel_dict["base_url"].endswith("/"):
+        getLogger(__name__).error("base_url should end with a /")
+        exit(1)
     stdout.buffer.write(
         generate_feed(
             channel_dict,
