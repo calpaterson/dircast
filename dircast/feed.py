@@ -19,7 +19,7 @@ def add_entry(fg, md):
 def generate_feed(channel_dict, output_file, file_metadatas):
     fg = FeedGenerator()
     fg.load_extension("podcast")
-    feed_url = urljoin(channel_dict["url"], output_file)
+    feed_url = urljoin(channel_dict["base_url"], output_file)
     fg.link(href=feed_url, rel="self")
     fg.title(channel_dict["title"])
     fg.description(channel_dict["description"])

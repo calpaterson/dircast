@@ -22,5 +22,5 @@ def main(directory, debug, output_file):
         generate_feed(
             channel_dict,
             output_file,
-            find_files(channel_dict["url"], Path(directory)))
+            find_files(channel_dict["base_url"], Path(directory)))
     )

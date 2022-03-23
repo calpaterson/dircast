@@ -15,7 +15,7 @@ Development version:
 pip install https://github.com/calpaterson/dircast/archive/master.zip
 ```
 
-Dircast is written in Python 3. 
+Dircast is written in Python 3.
 
 ### Windows ###
 Windows dircast only works with 32bit python, due to [python-magic dependent DLL files](https://github.com/ahupp/python-magic#dependencies) (there might be a 64bit version available from somewhere else). After pip install add these to PATH on you should be good to go.
@@ -32,15 +32,15 @@ First create a `channel.yml` file in the same directory as your audio files:
 ---
 title: All About Everything
 description: A show about everything
-url: http://www.mywebsite.com/everything-podcast/
+base_url: http://www.mywebsite.com/everything-podcast/
 ```
 
-The `url` part should be where you will host your podcast.
+The `base_url` part should be where you will host your podcast.
 
 Then (in the same directory) use it like this:
 
 ```
-dircast . > index.rss
+dircast . index.rss
 ```
 
 Dircast will automatically look for audio files and add them to the RSS feed.
