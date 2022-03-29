@@ -3,4 +3,3 @@ click
 pyyaml
 feedgen
 python-magic
-pathlib
