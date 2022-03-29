@@ -4,3 +4,5 @@ pyflakes
 pytest-catchlog
 mypy==0.942
 types-pyyaml
+black==22.3.0
+flake8==4.0.1

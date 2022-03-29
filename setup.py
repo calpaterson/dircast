@@ -7,14 +7,14 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, "requirements.txt"), "r") as f:
     install_requires = f.read().splitlines()
 
-classifiers=[
+classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
     # ? "Intended Audience :: End Users/Desktop",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    "Programming Language :: Python",#? not sure what lowest working v is
+    "Programming Language :: Python",  # ? not sure what lowest working v is
     "Topic :: Multimedia :: Sound/Audio",
-    ]
+]
 
 setup(
     name="dircast",
@@ -27,10 +27,6 @@ setup(
     keywords="podcast rss feed",
     packages=find_packages(),
     include_package_data=True,
-    scripts=[
-    ],
     install_requires=install_requires,
-    entry_points={
-        "console_scripts": "dircast = dircast.cli:main"
-    }
+    entry_points={"console_scripts": "dircast = dircast.cli:main"},
 )

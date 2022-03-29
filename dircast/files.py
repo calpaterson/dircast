@@ -1,8 +1,6 @@
-import math
 from logging import getLogger
 import hashlib
 from datetime import timedelta, datetime, timezone
-import os.path
 
 import magic
 import yaml
@@ -23,8 +21,7 @@ class FileMetadata(object):
         self.published = published
 
     def __eq__(self, other):
-        return (isinstance(other, self.__class__)
-            and self.__dict__ == other.__dict__)
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -54,10 +51,7 @@ def get_file_metadata(channel_url, mimetype, path):
         title = tag_info["title"][0]
     except KeyError:
         title = path.name
-    link = "".join([
-        channel_url,
-        str(path)
-    ])
+    link = "".join([channel_url, str(path)])
     mtime = path.stat().st_mtime
     md = FileMetadata(
         id=hashlib.sha1(title.encode()).hexdigest(),
@@ -81,7 +75,7 @@ def find_files(channel_url, path):
             "%s is of type %s - %s",
             child,
             mimetype,
-            "is audio" if is_audio else "not audio"
+            "is audio" if is_audio else "not audio",
         )
 
         if is_audio:
