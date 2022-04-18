@@ -36,6 +36,8 @@ def generate_feed(
     fg.link(href=feed_url, rel="self")
     fg.title(channel_dict["title"])
     fg.description(channel_dict["description"])
+    if "image_url" in channel_dict:
+        fg.podcast.itunes_image(channel_dict["image_url"])
 
     for file_metadata in reversed(file_metadatas):
         add_entry(fg, file_metadata)
