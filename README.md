@@ -74,7 +74,7 @@ the same "mtime", but you want them ordered alphabetically, try running a
 command like:
 
 ```bash
-ls | sort | xargs -d '\n' -I % sh -c '{ echo %; sleep 1; }'
+ls | sort | xargs -d '\n' -I % sh -c '{ echo "%"; touch "%"; sleep 1; }'
 ```
 
 Note that you need a one second minimum gap between podcast entries because
