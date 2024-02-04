@@ -54,6 +54,8 @@ Supported file formats
 
 - mp3 (*.mp3)
 - mp4 (*.aac, *.mp4, *.m4a)
+- anything else that [mutagen](https://mutagen.readthedocs.io/en/latest/) supports
+  - a long list
 
 Titles and RSS "unique ids"
 ---------------------------

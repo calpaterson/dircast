@@ -2,12 +2,11 @@ from logging import getLogger
 import hashlib
 from datetime import timedelta, datetime, timezone
 
-import magic
 import yaml
 import mutagen
 
 
-AUDIO_MIMETYPES = {"audio/mpeg", "audio/mp4", "video/mp4"}
+STANDARDISED_MIMETYPES = {"audio/mpeg", "audio/mp4"}
 
 
 class FileMetadata(object):
@@ -28,11 +27,26 @@ class FileMetadata(object):
 
 
 def guess_mimetype(path):
-    magic_mimetype = magic.from_file(str(path), mime=True)
-    if magic_mimetype == "audio/x-m4a":
-        return "audio/mp4"
+    mutagen_f = mutagen.File(path)
+    if mutagen_f is None:
+        return None
+    mimes = set(mutagen_f.mime)
+    getLogger(__name__).debug("mutagen got %s for %s", mimes, path)
+
+    # first match against the standards - mutagen returns multiple mimetypes
+    # for mp3 and mp4 and we want to use a specific one for compatibility
+    standardised_mimes = mimes.intersection(STANDARDISED_MIMETYPES)
+    if len(standardised_mimes) > 0:
+        return next(iter(standardised_mimes))
+
+    # otherwise (eg it's some other audio format) return the first 'audio/*' mimetype
+    for mime in mimes:
+        if mime.startswith("audio/"):
+            return mime
+
+    # else it's not audio
     else:
-        return magic_mimetype
+        return None
 
 
 def load_channel_file(path):
@@ -70,7 +84,7 @@ def find_files(channel_url, path):
     for child in sorted(path.iterdir()):
         getLogger(__name__).info("checking %s", child)
         mimetype = guess_mimetype(child)
-        is_audio = mimetype in AUDIO_MIMETYPES
+        is_audio = mimetype is not None
         getLogger(__name__).info(
             "%s is of type %s - %s",
             child,
