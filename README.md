@@ -10,18 +10,12 @@ formats other than mp3.
 Install
 -------
 
-Development version:
+Install from github:
 ```
 pip install https://github.com/calpaterson/dircast/archive/master.zip
 ```
 
 Dircast is written in Python 3.
-
-### Windows ###
-Windows dircast only works with 32bit python, due to [python-magic dependent DLL files](https://github.com/ahupp/python-magic#dependencies) (there might be a 64bit version available from somewhere else). After pip install add these to PATH on you should be good to go.
-
-Also *pip install [lxml](https://pypi.python.org/pypi/lxml "xml processing library")* dependency will fail if there isn't a wheel (`.whl`) matching your python version. Use the matching binary installer, e.g. `lxml-3.6.0.win32-py3.4.exe`, from lxml pypi page, then re-run pip install dircast.
-
 
 Usage
 -----
@@ -55,7 +49,7 @@ Supported file formats
 - mp3 (*.mp3)
 - mp4 (*.aac, *.mp4, *.m4a)
 - anything else that [mutagen](https://mutagen.readthedocs.io/en/latest/) supports
-  - a long list
+  - that's a long list
 
 Titles and RSS "unique ids"
 ---------------------------
